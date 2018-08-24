@@ -1,4 +1,5 @@
 Set Warnings "-notation-overridden,-parsing".
+Require Import Coq.Strings.String.
 Require Import Records.
 Parameter MISSING: Type.   
 
