@@ -1,3 +1,4 @@
+From Coq Require Extraction.
 (** * Extract: Running Coq programs in ML *)
 Require Extraction.
 
