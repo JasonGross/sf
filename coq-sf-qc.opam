@@ -26,6 +26,7 @@ bug-reports: "?"
 depends: [
   "ocaml"
   "coq"
+  "coq-quickchick"
 ]
 synopsis:
   "QuickChick: Property-Based Testing in Coq (Volume 4 of Software Foundations)"

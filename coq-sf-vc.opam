@@ -26,6 +26,7 @@ bug-reports: "?"
 depends: [
   "ocaml"
   "coq"
+  "coq-vst"
 ]
 synopsis:
   "Verifiable C (Volume 5 of Software Foundations)"
