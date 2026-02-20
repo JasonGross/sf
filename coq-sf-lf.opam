@@ -1,0 +1,36 @@
+opam-version: "2.0"
+homepage: "https://softwarefoundations.cis.upenn.edu/"
+doc: "https://softwarefoundations.cis.upenn.edu/"
+authors: [
+  "Benjamin C. Pierce"
+  "Arthur Azevedo de Amorim"
+  "Chris Casinghino"
+  "Marco Gaboardi"
+  "Michael Greenberg"
+  "Cătălin Hriţcu"
+  "Vilhelm Sjöberg"
+  "Andrew Tolmach"
+  "Brent Yorgey"
+]
+license: "like MIT"
+
+build: [
+  [make "-C" "lf-current" "-j%{jobs}%"]
+]
+
+install: [
+  [make "-C" "lf-current" "install"]
+]
+
+bug-reports: "?"
+depends: [
+  "ocaml"
+  "coq"
+]
+synopsis:
+  "Logical Foundations (Volume 1 of Software Foundations)"
+description:
+  "Logical Foundations is the entry-point to the series, covering functional programming, basic concepts of logic, computer-assisted theorem proving, and Coq."
+url {
+  src: "https://www.cis.upenn.edu/~bcpierce/sf/lf-current/lf.tgz"
+}
