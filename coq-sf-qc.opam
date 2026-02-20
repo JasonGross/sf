@@ -1,0 +1,36 @@
+opam-version: "2.0"
+homepage: "https://softwarefoundations.cis.upenn.edu/"
+doc: "https://softwarefoundations.cis.upenn.edu/"
+authors: [
+  "Benjamin C. Pierce"
+  "Arthur Azevedo de Amorim"
+  "Chris Casinghino"
+  "Marco Gaboardi"
+  "Michael Greenberg"
+  "Cătălin Hriţcu"
+  "Vilhelm Sjöberg"
+  "Andrew Tolmach"
+  "Brent Yorgey"
+]
+license: "like MIT"
+
+build: [
+  [make "-C" "qc-current" "-j%{jobs}%"]
+]
+
+install: [
+  [make "-C" "qc-current" "install"]
+]
+
+bug-reports: "?"
+depends: [
+  "ocaml"
+  "coq"
+]
+synopsis:
+  "QuickChick: Property-Based Testing in Coq (Volume 4 of Software Foundations)"
+description:
+  "QuickChick introduces tools for combining randomized property-based testing with formal specification and proof in Coq."
+url {
+  src: "https://www.cis.upenn.edu/~bcpierce/sf/qc-current/qc.tgz"
+}

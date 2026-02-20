@@ -1,0 +1,36 @@
+opam-version: "2.0"
+homepage: "https://softwarefoundations.cis.upenn.edu/"
+doc: "https://softwarefoundations.cis.upenn.edu/"
+authors: [
+  "Benjamin C. Pierce"
+  "Arthur Azevedo de Amorim"
+  "Chris Casinghino"
+  "Marco Gaboardi"
+  "Michael Greenberg"
+  "Cătălin Hriţcu"
+  "Vilhelm Sjöberg"
+  "Andrew Tolmach"
+  "Brent Yorgey"
+]
+license: "like MIT"
+
+build: [
+  [make "-C" "vc-current" "-j%{jobs}%"]
+]
+
+install: [
+  [make "-C" "vc-current" "install"]
+]
+
+bug-reports: "?"
+depends: [
+  "ocaml"
+  "coq"
+]
+synopsis:
+  "Verifiable C (Volume 5 of Software Foundations)"
+description:
+  "Verifiable C is an extended hands-on tutorial on specifying and verifying real-world C programs using the Princeton Verified Software Toolchain."
+url {
+  src: "https://www.cis.upenn.edu/~bcpierce/sf/vc-current/vc.tgz"
+}

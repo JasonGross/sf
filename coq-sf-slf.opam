@@ -1,0 +1,36 @@
+opam-version: "2.0"
+homepage: "https://softwarefoundations.cis.upenn.edu/"
+doc: "https://softwarefoundations.cis.upenn.edu/"
+authors: [
+  "Benjamin C. Pierce"
+  "Arthur Azevedo de Amorim"
+  "Chris Casinghino"
+  "Marco Gaboardi"
+  "Michael Greenberg"
+  "Cătălin Hriţcu"
+  "Vilhelm Sjöberg"
+  "Andrew Tolmach"
+  "Brent Yorgey"
+]
+license: "like MIT"
+
+build: [
+  [make "-C" "slf-current" "-j%{jobs}%"]
+]
+
+install: [
+  [make "-C" "slf-current" "install"]
+]
+
+bug-reports: "?"
+depends: [
+  "ocaml"
+  "coq"
+]
+synopsis:
+  "Separation Logic Foundations (Volume 6 of Software Foundations)"
+description:
+  "Separation Logic Foundations is an in-depth introduction to separation logic, a practical approach to modular verification of imperative programs."
+url {
+  src: "https://www.cis.upenn.edu/~bcpierce/sf/slf-current/slf.tgz"
+}
