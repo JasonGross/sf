@@ -1,0 +1,37 @@
+opam-version: "2.0"
+homepage: "https://softwarefoundations.cis.upenn.edu/"
+doc: "https://softwarefoundations.cis.upenn.edu/"
+authors: [
+  "Cătălin Hriţcu"
+  "Yonghyun Kim"
+  "Santiago Arranz Olmos"
+  "Gilles Barthe"
+  "Roberto Blanco"
+  "Lionel Blatter"
+  "Léon Ducruet"
+  "Sebastian Harwig"
+  "Benjamin C. Pierce"
+  "Jérémy Thibault"
+]
+license: "like MIT"
+
+build: [
+  [make "-C" "secf-current" "-j%{jobs}%"]
+]
+
+install: [
+  [make "-C" "secf-current" "install"]
+]
+
+bug-reports: "?"
+depends: [
+  "ocaml"
+  "coq"
+]
+synopsis:
+  "Security Foundations (Volume 7 of Software Foundations)"
+description:
+  "Security Foundations covers information-flow security, noninterference, static information-flow control, and constant-time programming."
+url {
+  src: "https://www.cis.upenn.edu/~bcpierce/sf/secf-current/secf.tgz"
+}
