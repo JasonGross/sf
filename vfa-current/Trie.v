@@ -175,8 +175,10 @@ Eval compute in print_in_binary ten.  (*  = [1; 0; 1; 0] *)
 Declare Scope mypos_scope.
 Delimit Scope mypos_scope with mypos.
 Bind Scope mypos_scope with positive.
-Notation "p ~ 1" := (xI p) : mypos_scope.
-Notation "p ~ 0" := (xO p) : mypos_scope.
+Notation "p ~ 1" := (xI p)
+ (format "p '~' '1'") : mypos_scope.
+Notation "p ~ 0" := (xO p)
+ (format "p '~' '0'") : mypos_scope.
 Open Scope mypos_scope.
 
 Print ten. (* = xH~0~1~0 : positive *)
