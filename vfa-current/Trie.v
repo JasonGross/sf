@@ -167,12 +167,17 @@ Fixpoint print_in_binary (p: positive) : list nat :=
 Eval compute in print_in_binary ten.  (*  = [1; 0; 1; 0] *)
 
 (** Another way to see the "binary representation" is to make up
-     postfix notation for [xI] and [xO], as follows *)
+     postfix notation for [xI] and [xO].  As of Rocq 9.2, the standard
+     library already defines [_ ~ 1] and [_ ~ 0] at a fixed level, so
+     to avoid a conflict we use a custom scope bound to our local
+     [positive] type. *)
 
-Notation "p ~ 1" := (xI p)
- (at level 7, left associativity, format "p '~' '1'").
-Notation "p ~ 0" := (xO p)
- (at level 7, left associativity, format "p '~' '0'").
+Declare Scope mypos_scope.
+Delimit Scope mypos_scope with mypos.
+Bind Scope mypos_scope with positive.
+Notation "p ~ 1" := (xI p) : mypos_scope.
+Notation "p ~ 0" := (xO p) : mypos_scope.
+Open Scope mypos_scope.
 
 Print ten. (* = xH~0~1~0 : positive *)
 
