@@ -167,21 +167,28 @@ Fixpoint print_in_binary (p: positive) : list nat :=
 Eval compute in print_in_binary ten.  (*  = [1; 0; 1; 0] *)
 
 (** Another way to see the "binary representation" is to make up
-     postfix notation for [xI] and [xO].  As of Rocq 9.2, the standard
-     library already defines [_ ~ 1] and [_ ~ 0] at a fixed level, so
-     to avoid a conflict we use a custom scope bound to our local
-     [positive] type. *)
+     postfix notation for [xI] and [xO], as follows.
 
-Declare Scope mypos_scope.
-Delimit Scope mypos_scope with mypos.
-Bind Scope mypos_scope with positive.
+     As of Rocq 9.2, the standard library already defines
+     [_ ~ 1] and [_ ~ 0] at a fixed level, so to avoid a
+     conflict we place our notations in a custom entry. *)
+
+Declare Custom Entry mypos.
 Notation "p ~ 1" := (xI p)
- (format "p '~' '1'") : mypos_scope.
+ (in custom mypos at level 7, p custom mypos,
+  left associativity, format "p '~' '1'").
 Notation "p ~ 0" := (xO p)
- (format "p '~' '0'") : mypos_scope.
-Open Scope mypos_scope.
+ (in custom mypos at level 7, p custom mypos,
+  left associativity, format "p '~' '0'").
+Notation "x" := x
+ (in custom mypos at level 0, x constr at level 0).
+Notation "( x )" := x
+ (in custom mypos at level 0, x constr at level 9).
+Notation "<< e >>" := e
+ (e custom mypos at level 7, format "<< e >>").
 
-Print ten. (* = xH~0~1~0 : positive *)
+Print ten. (* = xO (xI (xO xH)) : positive *)
+Eval compute in << xH~0~1~0 >>. (* reading ten back *)
 
 (** Why are we using positive numbers anyway?  Since the zero was
     invented 2300 years ago by the Babylonians, it's sort of old-fashioned
@@ -198,9 +205,9 @@ Print ten. (* = xH~0~1~0 : positive *)
 
 Fixpoint succ x :=
   match x with
-    | p~1 => (succ p)~0
-    | p~0 => p~1
-    | xH => xH~0
+    | << p~1 >> => << (succ p)~0 >>
+    | << p~0 >> => << p~1 >>
+    | xH => << xH~0 >>
   end.
 
 (** To add binary numbers, we work from low-order to high-order,
@@ -208,24 +215,24 @@ Fixpoint succ x :=
 
 Fixpoint addc (carry: bool) (x y: positive) {struct x} : positive :=
   match carry, x, y with
-    | false, p~1, q~1 => (addc true p q)~0
-    | false, p~1, q~0 => (addc false p q)~1
-    | false, p~1, xH => (succ p)~0
-    | false, p~0, q~1 => (addc false p q)~1
-    | false, p~0, q~0 => (addc false p q)~0
-    | false, p~0, xH => p~1
-    | false, xH, q~1 => (succ q)~0
-    | false, xH, q~0 => q~1
-    | false, xH, xH => xH~0
-    | true, p~1, q~1 => (addc true p q)~1
-    | true, p~1, q~0 => (addc true p q)~0
-    | true, p~1, xH => (succ p)~1
-    | true, p~0, q~1 => (addc true p q)~0
-    | true, p~0, q~0 => (addc false p q)~1
-    | true, p~0, xH => (succ p)~0
-    | true, xH, q~1 => (succ q)~1
-    | true, xH, q~0 => (succ q)~0
-    | true, xH, xH => xH~1
+    | false, << p~1 >>, << q~1 >> => << (addc true p q)~0 >>
+    | false, << p~1 >>, << q~0 >> => << (addc false p q)~1 >>
+    | false, << p~1 >>, xH => << (succ p)~0 >>
+    | false, << p~0 >>, << q~1 >> => << (addc false p q)~1 >>
+    | false, << p~0 >>, << q~0 >> => << (addc false p q)~0 >>
+    | false, << p~0 >>, xH => << p~1 >>
+    | false, xH, << q~1 >> => << (succ q)~0 >>
+    | false, xH, << q~0 >> => << q~1 >>
+    | false, xH, xH => << xH~0 >>
+    | true, << p~1 >>, << q~1 >> => << (addc true p q)~1 >>
+    | true, << p~1 >>, << q~0 >> => << (addc true p q)~0 >>
+    | true, << p~1 >>, xH => << (succ p)~1 >>
+    | true, << p~0 >>, << q~1 >> => << (addc true p q)~0 >>
+    | true, << p~0 >>, << q~0 >> => << (addc false p q)~1 >>
+    | true, << p~0 >>, xH => << (succ p)~0 >>
+    | true, xH, << q~1 >> => << (succ q)~1 >>
+    | true, xH, << q~0 >> => << (succ q)~0 >>
+    | true, xH, xH => << xH~1 >>
   end.
 
 Definition add (x y: positive) : positive := addc false x y.
@@ -285,9 +292,9 @@ Inductive comparison : Set :=
 (** **** Exercise: 5 stars, standard (compare_correct) *)
 Fixpoint compare x y {struct x}:=
   match x, y with
-    | p~1, q~1 => compare p q
-    | p~1, q~0 => match compare p q with Lt => Lt | _ => Gt end
-    | p~1, xH => Gt
+    | << p~1 >>, << q~1 >> => compare p q
+    | << p~1 >>, << q~0 >> => match compare p q with Lt => Lt | _ => Gt end
+    | << p~1 >>, xH => Gt
 
   (* DELETE THIS CASE!  Replace it with cases that actually work. *)
     | _, _ => Lt
